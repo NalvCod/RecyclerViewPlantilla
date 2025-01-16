@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="?attr/listPreferredItemHeight"
-    android:background="@color/design_default_color_error">
+    android:background="@color/rojo"
+    >
 
     <CheckBox
         android:id="@+id/check"
@@ -13,7 +14,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:buttonTint="@color/white"/>
 
     <TextView
         android:id="@+id/tituloPokemon"
@@ -23,7 +25,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/check"
         app:layout_constraintStart_toEndOf="@id/check"
         app:layout_constraintTop_toTopOf="@id/check"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="20dp"
         android:layout_marginStart="10dp"/>
 

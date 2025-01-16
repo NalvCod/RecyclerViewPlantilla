@@ -8,11 +8,17 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recyclerview.databinding.ActivityItemPokemonBinding
 
-class PokemonAdapter (private val listaPokemon: List<Pokemon>, private val listener: OnClickListener): RecyclerView.Adapter<PokemonAdapter.ViewHolder>() {
+class PokemonAdapter (private var listaPokemon: MutableList<Pokemon>, private val listener: OnClickListener): RecyclerView.Adapter<PokemonAdapter.ViewHolder>() {
 
     //Es una clase que mantiene los elementos de la lista en memoria
     inner class ViewHolder (view: View) : RecyclerView.ViewHolder(view){
         val binding = ActivityItemPokemonBinding.bind(view) //Para acceder a los elementos del layout del item
+        fun setListener(pokemon: Pokemon){
+            binding.root.setOnLongClickListener{
+                listener.onLongClick(pokemon)
+                true
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,8 +30,30 @@ class PokemonAdapter (private val listaPokemon: List<Pokemon>, private val liste
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         //Le damos un valor a los elementos de la lista
         val pokemon = listaPokemon.get(position)
-        Log.v("Pokemon", "aparece")
+        holder.setListener(pokemon)
         holder.binding.tituloPokemon.text = pokemon.nombre
+        holder.binding.check.isChecked=pokemon.atrapado
+
+        holder.binding.check.setOnClickListener {
+            pokemon.atrapado = holder.binding.check.isChecked
+        }
+        if (position % 2 == 0){
+            holder.binding.root.setBackgroundColor(
+
+                holder.binding.root.resources.getColor(R.color.rojito, null)
+            )
+        }
+
+    }
+
+    fun addPokemon(pokemon: Pokemon){
+        listaPokemon.add(pokemon)
+        notifyDataSetChanged()
+    }
+
+    fun removePokemon(pokemon:Pokemon){
+        listaPokemon.remove(pokemon)
+        notifyDataSetChanged()
     }
 
 

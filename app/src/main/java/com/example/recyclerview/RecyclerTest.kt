@@ -2,6 +2,7 @@ package com.example.recyclerview
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -46,9 +47,32 @@ class RecyclerTest : AppCompatActivity(), OnClickListener {
             adapter = pokemonAdapter
         }
 
+        binding.add.setOnClickListener{
+            if (binding.buscadorPokemon.text.toString().isNotEmpty()){
+                val pokemon = Pokemon (binding.buscadorPokemon.text.toString())
+                addPokemonAutomatically(pokemon)
+            }
+        }
+
+    }
+
+    private fun addPokemonAutomatically(pokemon : Pokemon){
+        pokemonAdapter.addPokemon(pokemon)
+    }
+
+    private fun removePokemonAutomatically(pokemon:Pokemon){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Eliminar Pokémon")
+        builder.setMessage("¿Quieres eliminar el Pokémon?")
+        builder.setPositiveButton("Si"){ _,_ ->
+            pokemonAdapter.removePokemon(pokemon)
+        }
+        builder.setNegativeButton("No"){_,_ ->
+        }
+        builder.show()
     }
 
     override fun onLongClick(pokemon: Pokemon) {
-        TODO("Not yet implemented")
+        removePokemonAutomatically(pokemon)
     }
 }
